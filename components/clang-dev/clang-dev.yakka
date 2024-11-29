@@ -10,20 +10,20 @@ supports:
       flags:
         ld:
           global:
-            - '{% for p in configuration.path %}-Wl,-L"{{ absolute_path(p) }}" {% endfor %}'
+            - '-Wl,-L"/usr/lib/llvm-15/lib"'
             - -rpath @executable_path 
             - -lclang
     xcode:
       flags:
         ld:
           global:
-            - '-Wl,-L"/Library/Developer/CommandLineTools/usr/lib/"
+            - '-Wl,-L"/Library/Developer/CommandLineTools/usr/lib/"'
             - -rpath @executable_path 
             - -lclang
     msvc:
       flags:
         ld:
           global:
-            - "-LIBPATH:C:/Program Files/LLVM/lib"
+            - '-LIBPATH:"C:/Program Files/LLVM/lib"'
             - libclang.lib
 
