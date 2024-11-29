@@ -1,0 +1,8 @@
+name: PugiXML
+
+sources:
+  - master/src/pugixml.cpp
+
+includes:
+  global:
+    - master/src

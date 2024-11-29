@@ -1,0 +1,12 @@
+name: Yamlyze
+
+sources:
+  - yamlyze.cpp
+
+requires:
+  components:
+    - clang-dev
+    - pugixml
+    - yaml-cpp
+    - json
+    - cxxopts

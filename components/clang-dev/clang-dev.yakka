@@ -1,0 +1,29 @@
+name: Clang development
+
+includes:
+  global:
+    - include
+
+supports:
+  components:
+    clang:
+      flags:
+        ld:
+          global:
+            - '{% for p in configuration.path %}-Wl,-L"{{ absolute_path(p) }}" {% endfor %}'
+            - -rpath @executable_path 
+            - -lclang
+    xcode:
+      flags:
+        ld:
+          global:
+            - '{% for p in configuration.path %}-Wl,-L"{{ absolute_path(p) }}" {% endfor %}'
+            - -rpath @executable_path 
+            - -lclang
+    msvc:
+      flags:
+        ld:
+          global:
+            - '{% for p in configuration.path %}-LIBPATH:"{{ absolute_path(p) }}" {% endfor %}'
+            - libclang.lib
+

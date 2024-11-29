@@ -1,0 +1,5 @@
+name: C++ Options
+
+includes:
+  global:
+    - master/include

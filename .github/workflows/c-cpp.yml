@@ -1,0 +1,73 @@
+name: yamlyze Build
+
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        lfs: 'true'
+    - name: Check out LFS objects
+      run: git lfs checkout
+    - run: ./yakka-linux link! yamlyze clang
+    - run: mv ${{github.workspace}}/output/yamlyze-clang/yamlyze-clang ${{github.workspace}}/output/yamlyze-clang/yamlyze-linux
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Linux executable
+        path: ${{github.workspace}}/output/yamlyze-clang/yamlyze-linux
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: Linux build log
+        path: ${{github.workspace}}/yakka.log
+  build_windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        lfs: 'true'
+    - name: Check out LFS objects
+      run: git lfs checkout
+    - uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: amd64
+    - run: 'dir env:'
+    - run: ./yakka-windows link! yamlyze msvc
+    - run: mv ${{github.workspace}}/output/yamlyze-msvc/yamlyze-msvc.exe ${{github.workspace}}/output/yamlyze-msvc/yamlyze-windows.exe
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Windows executable
+        path: ${{github.workspace}}/output/yamlyze-msvc/yamlyze-windows.exe
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: Windows build log
+        path: ${{github.workspace}}/yakka.log
+  build_macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        lfs: 'true'
+    - name: Check out LFS objects
+      run: git lfs checkout
+    - run: ./yakka-macos link! yamlyze xcode
+    - run: mv ${{github.workspace}}/output/yamlyze-xcode/yamlyze-xcode ${{github.workspace}}/output/yamlyze-xcode/yamlyze-macos
+    - uses: actions/upload-artifact@v4
+      with:
+        name: MacOS executable
+        path: ${{github.workspace}}/output/yamlyze-xcode/yamlyze-macos
+        if-no-files-found: error
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: MacOS build log
+        path: ${{github.workspace}}/yakka.log
