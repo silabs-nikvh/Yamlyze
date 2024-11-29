@@ -17,13 +17,13 @@ supports:
       flags:
         ld:
           global:
-            - '{% for p in configuration.path %}-Wl,-L"{{ absolute_path(p) }}" {% endfor %}'
+            - '-Wl,-L"/Library/Developer/CommandLineTools/usr/lib/"
             - -rpath @executable_path 
             - -lclang
     msvc:
       flags:
         ld:
           global:
-            - '{% for p in configuration.path %}-LIBPATH:"{{ absolute_path(p) }}" {% endfor %}'
+            - "-LIBPATH:C:/Program Files/LLVM/lib"
             - libclang.lib
 
