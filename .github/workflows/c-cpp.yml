@@ -16,7 +16,7 @@ jobs:
     - name: Check out LFS objects
       run: git lfs checkout
     - name: Fix libclang
-      run: cd /usr/lib/llvm-15/lib && ln -s libclang.so.1 libclang.so
+      run: cd /usr/lib/llvm-15/lib && sudo ln -s libclang.so.1 libclang.so
     - run: ./yakka-linux link! yamlyze clang
     - run: mv ${{github.workspace}}/output/yamlyze-clang/yamlyze-clang ${{github.workspace}}/output/yamlyze-clang/yamlyze-linux
     - uses: actions/upload-artifact@v4
