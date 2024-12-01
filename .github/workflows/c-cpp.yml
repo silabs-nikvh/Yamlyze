@@ -22,7 +22,9 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Linux executable
-        path: ${{github.workspace}}/output/yamlyze-clang/yamlyze-linux
+        path: |
+          ${{github.workspace}}/output/yamlyze-clang/yamlyze-linux
+          /usr/lib/llvm-15/lib/libclang.so
         if-no-files-found: error
     - uses: actions/upload-artifact@v4
       if: failure()
@@ -42,14 +44,16 @@ jobs:
         arch: amd64
     - run: 'dir env:'
     - run: 'dir /'
-    - name: Set LIBCLANG_PATH
-      run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
+#    - name: Set LIBCLANG_PATH
+#      run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
     - run: ./yakka-windows link! yamlyze msvc
     - run: mv ${{github.workspace}}/output/yamlyze-msvc/yamlyze-msvc.exe ${{github.workspace}}/output/yamlyze-msvc/yamlyze-windows.exe
     - uses: actions/upload-artifact@v4
       with:
         name: Windows executable
-        path: ${{github.workspace}}/output/yamlyze-msvc/yamlyze-windows.exe
+        path: |
+          ${{github.workspace}}/output/yamlyze-msvc/yamlyze-windows.exe
+          C:/Program Files/LLVM/lib/libclang.dll
         if-no-files-found: error
     - uses: actions/upload-artifact@v4
       if: failure()
@@ -69,7 +73,9 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: MacOS executable
-        path: ${{github.workspace}}/output/yamlyze-xcode/yamlyze-macos
+        path: |
+          ${{github.workspace}}/output/yamlyze-xcode/yamlyze-macos
+          /Library/Developer/CommandLineTools/usr/lib/libclang.dylib
         if-no-files-found: error
     - uses: actions/upload-artifact@v4
       if: failure()
