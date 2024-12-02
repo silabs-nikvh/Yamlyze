@@ -49,7 +49,7 @@ jobs:
 #      run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
     - run: ./yakka-windows link! yamlyze msvc
     - run: mv ${{github.workspace}}/output/yamlyze-msvc/yamlyze-msvc.exe ${{github.workspace}}/output/yamlyze-msvc/yamlyze-windows.exe
-    - run: copy C:/Program Files/LLVM/bin/libclang.dll ${{github.workspace}}/output/yamlyze-msvc/libclang.dll
+    - run: Copy-Item "C:\Program Files\LLVM\bin\libclang.dll" -Destination ${{github.workspace}}/output/yamlyze-msvc
     - uses: actions/upload-artifact@v4
       with:
         name: Windows executable
